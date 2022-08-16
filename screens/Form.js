@@ -3,6 +3,7 @@ import { SafeAreaView, StyleSheet, ScrollView, View, Text, StatusBar, TextInput,
 import { Header, LearnMoreLinks, Colors, DebugInstructions, ReloadInstructions } from 'react-native/Libraries/NewAppScreen';
 import { Formik } from 'formik'; 
 import * as yup from 'yup';
+import Main from '../navigation/Main.js';
 
 const Form = () => {
     const [postres, elegirPostre] = useState('Seleccionar Postre');
