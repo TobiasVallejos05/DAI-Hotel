@@ -1,21 +1,61 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import Main from '../navigation/Main.js';
+import React, { Component, useEffect, useState, FlatList } from 'react';
+import { traerPlatos } from '../axios/axiosClient';
+import { StyleSheet, Text, View, TextInput} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+//import React, {  useState } from 'react';
 
-export default function Home() {
+
+const Home =({navigation})=>{
+  const [buscador,setBuscador]=useState("");
+  const flatlist = [
+    {
+      
+      title: data.title,
+    },
+    {
+      
+      title: data.title,
+    },
+    {
+      
+      title: data.title,
+    },
+  ];
+
+
   return (
-    <View style={styles.container}>
-      <Text>Open up Home.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    
+    <View>
+      <Text>Datos ingresados</Text>
+      <TextInput 
+      onChangeText={(letras) => {
+        if (letras.length > 2) {
+          traerPlatos(letras).then((data) => {
+            setBuscador(data)
+            console.log(data)
+          })
+          
+        }
+      }}
+     
+      />
+   
+   <SafeAreaView>
+      <FlatList
+        data={flatlist}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+      />
+    </SafeAreaView>
+
+
+
+
+
+
     </View>
-  );
+   
+  ); 
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default Home
