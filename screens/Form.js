@@ -1,28 +1,38 @@
 import React, {  useState } from 'react';
 import { TextInput,Button,StyleSheet,Text,View,Alert } from 'react-native';
 import { enviarEmailPsw } from '../axios/axiosClient';
+import {useContextState, ActionTypes} from '../contextState'
+import { useNavigation } from '@react-navigation/native';
 
 const Form = ({navigation}) => {
-
-    const [aux,setAux]=useState(true);
-    const [botonActivado,setBotonActiado]=useState(true);
-    const [token,setToken]=useState(true);
+    const {contextState, setContextState} = useContextState();
+    const [aux, setAux] = useState(true);
+    const [cargar, setCargar] = useState(false);
     const [obj, setObj] = useState({
-            email: "",
-            password: "",
+            email: "challenge@alkemy.org",
+            password: "react",
     });
-    const validar =async()=>{
-    
-    if( obj.email==""||obj.password==""){
+    const validar = async()=>{
+    setCargar(true);
+    if( obj.email=="" || obj.password==""){
     setAux(false)
-    setBotonActiado(true)
     }
     else{
          setAux(true)
-       setToken (await enviarEmailPsw(obj))
-       navigation.push('Home')
-       console.log("datos ingresados")
+         try {
+            const token = await enviarEmailPsw(obj)
+            console.log(token)
+            setContextState({
+               type: ActionTypes.SetToken,
+               value:token,
+            });
+            navigation.push('Home')
+         } catch (err) {
+            console.log("error: ", err)
+            setCargar(false)
+         }
     }
+    setCargar(false);
 }
 
     return (      
@@ -41,15 +51,16 @@ const Form = ({navigation}) => {
                         onChangeText={(value)=>{setObj({...obj,password: value})}}       
                         value={obj.password}
                 />
+                
                 <Button style={styles.button}
                 onPress={validar}
                 title="press"
-                disabled={!botonActivado}
+
+                disabled={cargar}
                 />
                 
            </View>            
-        )
-        
+        )        
 }
 
 const styles = StyleSheet.create({
@@ -81,7 +92,6 @@ const styles = StyleSheet.create({
             elevation: 3,
             backgroundColor: 'black',
           },
-
   });
   
   export default Form;
