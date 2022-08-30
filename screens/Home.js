@@ -3,27 +3,22 @@ import { traerPlatos } from '../axios/axiosClient';
 import { StyleSheet, Text, Image , View, TextInput, FlatList, StatusBar, SafeAreaView, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {useContextState, ActionTypes, contextState} from '../contextState'
-//import React, {  useState } from 'react';
-
 
 const Home =({navigation})=>{
-  //const {contextState,setContextState}=useContextState();
   const [buscador,setBuscador]=useState("");
   const [platos,setPlatos]=useState([]);
-  
+  const {contextState,setContextState}=useContextState();
+
   const renderItem = ({ item }) => {
     return <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Info',{id:item.id})}>
-      <Text style={styles.title}>{item.title}</Text>
-      <Image 
-    
-      style={styles.tinyLogo}
+      <Image style={styles.tinyLogo}
       source={{
           uri: item.image.toString(),
         }} >
-        </Image>
-       
-      
+      </Image>
+      <Text style={styles.title}>{item.title}</Text>
     </TouchableOpacity>
+   
   };
 
   const onChange = async (letras) => {
@@ -37,46 +32,57 @@ const Home =({navigation})=>{
 
   return (
     
-    <View >
-      <Text>Datos ingresados</Text>
-      <TextInput 
+    <View style={styles.container} > 
+      <Text>{contextState.plato.titulo}</Text>
+      <TextInput style={styles.input} 
       onChangeText={onChange}
       />
-       <SafeAreaView style={styles.container}>
+       <SafeAreaView>
         <FlatList 
-          numColumns={999}
+         
           data={platos}
-          horizontal={false}
+          
           keyExtractor={(data) => data.title}
           renderItem={renderItem}
         />
         </SafeAreaView>
 
-            
+           
     </View>  
   ); 
 }
 const styles = StyleSheet.create({
 
   tinyLogo: {
+    justifyContent: "center",
     width: 100,
-    height: 100,
+    height: 100
   },
   container: {
-    flex: 1,
+    display: "flex",
     marginTop: StatusBar.currentHeight || 0,
+    backgroundColor: "lightgray",
+    alignItems: "center",
+  },
+  input: {
+    height: 40,
+    width: 300,
+    borderWidth: 1,
+    margin: 12,
+    padding: 12
   },
   item: {
     padding: 20,
     marginVertical: 8,
-    marginHorizontal: 12,
+    marginHorizontal: 16
   },
   title: {
-    fontSize: 15,
+    fontSize: 20,
+    fontWeight: 400
   },
   image: {
-    width: 70,
-    height:70,
+    width: 100,
+    height: 100
   },
 });
 

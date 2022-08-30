@@ -2,7 +2,7 @@ import React, {  useState } from 'react';
 import { TextInput,Button,StyleSheet,Text,View,Alert } from 'react-native';
 import { enviarEmailPsw } from '../axios/axiosClient';
 import {useContextState, ActionTypes} from '../contextState'
-import { useNavigation } from '@react-navigation/native';
+import { CurrentRenderContext, useNavigation } from '@react-navigation/native';
 
 const Form = ({navigation}) => {
     const {contextState, setContextState} = useContextState();
@@ -12,9 +12,12 @@ const Form = ({navigation}) => {
             email: "challenge@alkemy.org",
             password: "react",
     });
-    const validar = async()=>{
+    const validar = async() => {
     setCargar(true);
-    if( obj.email=="" || obj.password==""){
+    if( 
+    obj.email == "" || 
+    obj.password == ""
+    ){
     setAux(false)
     }
     else{
@@ -38,12 +41,12 @@ const Form = ({navigation}) => {
     return (      
             <View style={styles.container}>
                 
-                <Text style={styles.iniciarSesion}>Iniciar Sesión</Text><br></br>
+                <Text style={styles.iniciarSesion}>Log in</Text><br></br>
                 {!aux &&
                     <Text>No ingreso los valores correspondientes</Text>
                 }
-                 <TextInput   style={styles.input}
-                        title="Ingrese Usuario"
+                 <TextInput style={styles.input}
+                        title="Por favor, ingrese su usuario"
                         onChangeText={(value)=>{setObj({...obj,email: value})}}
                         value={obj.email}
                     />
@@ -52,11 +55,11 @@ const Form = ({navigation}) => {
                         value={obj.password}
                 />
                 
-                <Button style={styles.button}
-                onPress={validar}
-                title="press"
+                <Button style = {styles.button}
+                onPress = {validar}
+                title = "SEARCH"
 
-                disabled={cargar}
+                disabled = {cargar}
                 />
                 
            </View>            
@@ -66,26 +69,25 @@ const Form = ({navigation}) => {
 const styles = StyleSheet.create({
 
         iniciarSesion:{
-            fontSize: 75,
-            marginTop:'30px'
-            
+            fontSize: 50,
+            fontWeight: 500,
         },
         container:{
             flex: 1,
             width: '100vw',
             height:'100vh',
             alignItems: 'center',
-            backgroundColor: "lightblue"
+            placeContent: 'center',
+            backgroundColor: "lightgray"
         },
         input: {
             height: 40,
-            margin: 12,
+            width: 300,
             borderWidth: 1,
-            padding: 10,
+            margin: 12,
+            padding: 12
           },
           button: {
-            alignItems: 'center',
-            justifyContent: 'center',
             paddingVertical: 12,
             paddingHorizontal: 32,
             borderRadius: 4,

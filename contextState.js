@@ -1,13 +1,29 @@
 import * as React from 'react';
 import {useContext} from "react";
+
 export const initialState={
     loading:true,
     token:'',
+     plato:{
+        titulo:'',
+        image:'',
+        precioPorUnidad:0,
+        sano:0,
+        vegano:false,
+        vegetariano:false,
+    }
 };
 
 export const ActionTypes={
 SetLoading:'SET_LOADING',
-SetToken:'SET_TOKEN'
+SetToken:'SET_TOKEN',
+SetPlato:'SET_PLATO',
+SetTitulo:'SET_TITULO',
+SetImage:'SET_IMAGE',
+SetPrecioPorUnidad:'SET_PRECIOPORUNIDAD',
+SetSano:'SET_SANO',
+SetVegano:'SET_VEGANO',
+SetVegetariano:'SET_VEGETARIANO'
 }
 
 export const reducer =(state={},action)=>{
@@ -22,6 +38,41 @@ export const reducer =(state={},action)=>{
                 ...state,
                 token: action.value,
             };
+         case ActionTypes.SetPlato:
+            return{
+                ...state,
+                token: action.value,
+            };
+            case ActionTypes.SetTitulo:
+            return{
+                ...state,
+                token: action.value,
+            };
+            case ActionTypes.SetImage:
+                return{
+                    ...state,
+                    token: action.value,
+            };    
+            case ActionTypes.SetPrecioPorUnidad:
+                return{
+                    ...state,
+                    token: action.value,
+            };
+            case ActionTypes.SetSano:
+                return{
+                    ...state,
+                    token: action.value,
+            }; 
+            case ActionTypes.SetVegano:
+                return{
+                    ...state,
+                    token: action.value,
+            }; 
+            case ActionTypes.SetVegetariano:
+                return{
+                    ...state,
+                    token: action.value,
+            }; 
     }
 }
 export const initialContext={
