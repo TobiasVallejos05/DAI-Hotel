@@ -2,7 +2,6 @@ import React, {  useState } from 'react';
 import { TextInput,Button,StyleSheet,Text,View,Alert } from 'react-native';
 import { enviarUsuario } from '../axios/axiosClient';
 import {useContextState, ActionTypes} from '../contextState'
-import { CurrentRenderContext, useNavigation } from '@react-navigation/native';
 
 const Form = ({navigation}) => {
     
@@ -29,7 +28,7 @@ const Form = ({navigation}) => {
             console.log(token)
             setContextState({
                type: ActionTypes.SetToken,
-               value:token,
+               value: token,
             });
             navigation.push('Home')
          } catch (err) {
@@ -42,7 +41,7 @@ const Form = ({navigation}) => {
 
     return (      
             <View style={styles.container}>
-                <Text style={styles.iniciarSesion}>Log in</Text>
+                <Text style={styles.login}>Iniciar Sesión</Text>
                 <TextInput 
                     style={styles.input} 
                     placeholder='Email'
@@ -56,14 +55,13 @@ const Form = ({navigation}) => {
                         value={obj.password}
                     />
                 {!aux &&
-                    <Text>Al menos uno de los campos está vacío. Por favor, completelo</Text>
+                    <Text style = {styles.errorMessage} >Al menos uno de los campos está vacío. Por favor, completelo.</Text>
                 }
                 <br/>
-                <Button style={styles.button}
+                <Button style = {styles.button}
                 color = "black"
                 onPress = {validar}
                 title = "SEARCH"
-
                 disabled = {loading}
                 />
                 
@@ -73,9 +71,9 @@ const Form = ({navigation}) => {
 
 const styles = StyleSheet.create({
 
-        iniciarSesion:{
+        login:{
             fontSize: 50,
-            fontWeight: 500,
+            fontWeight: 500
         },
         container:{
             flex: 1,
@@ -90,7 +88,7 @@ const styles = StyleSheet.create({
             margin: 12,
             padding: 12
           },
-        error: {
+        errorMessage: {
             fontWeight: 500,
             color: "red"
         },
@@ -99,8 +97,7 @@ const styles = StyleSheet.create({
             paddingVertical: 12,
             paddingHorizontal: 32,
             borderRadius: 4,
-            elevation: 3,
-            color: 'black',
+            elevation: 3
           },
   });
   

@@ -1,6 +1,6 @@
 import React, { Component, useEffect, useState } from 'react';
 import { traerPlatos } from '../axios/axiosClient';
-import { StyleSheet, Text, Image , View, TextInput, FlatList, StatusBar, SafeAreaView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, Image , View, TextInput, FlatList, StatusBar, SafeAreaView, TouchableOpacity, Button } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import {useContextState, ActionTypes, contextState} from '../contextState'
 
@@ -31,21 +31,32 @@ const Home = ({navigation}) => {
 }
 
   return (
-    
-    <View style={styles.container}> 
-      <Text>{contextState.plato.titulo}</Text>
-      <TextInput style={styles.input} placeholder="Search" onChangeText={onChange} />
-       <SafeAreaView>
-        <FlatList 
-         
-          data={platos}
-          keyExtractor={(data) => data.title}
-          renderItem={renderItem}
-        />
-        </SafeAreaView>
 
-           
-    </View>  
+    <View style={styles.container} > 
+    <Image 
+    style={styles.tinyLogo}
+    source={{
+        uri: contextState.menu?.platos[0]?.image.toString(),
+      }}></Image>
+    <Text>{contextState.menu?.platos[0]?.title}</Text>
+    <Button onPress={() => navigation.navigate('Info',{id:contextState.menu?.platos[0]?.id})}></Button>
+    <Text>Datos ingresados</Text>
+    <TextInput onChangeText = {onChange} style = {styles.input}
+    />
+
+    
+     <SafeAreaView style={styles.container}>
+      <FlatList 
+        data={platos}
+        keyExtractor={(data) => data.title}
+        renderItem={renderItem}
+      />
+      
+      </SafeAreaView>
+
+         
+  </View> 
+
   ); 
 }
 const styles = StyleSheet.create({
