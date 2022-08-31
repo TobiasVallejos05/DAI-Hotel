@@ -4,7 +4,9 @@ const axiosClient = axios.create({
     baseURL: "http://challenge-react.alkemy.org/"
 })
 
-export const enviarEmailPsw= async (obj) =>{
+const API_KEY = "2f34f3b6abb54bc48a7dacd61c0353e9"
+
+export const enviarUsuario= async (obj) =>{
     return axiosClient.post('', {
         ...obj
     }).then(response =>{
@@ -18,12 +20,12 @@ export const enviarEmailPsw= async (obj) =>{
     })
     .catch(function(err) {
         console.log("No funciona", err)
-        alert("No funciona, ingrese los datos correctamente")
+        alert("Por favor, ingrese los datos nuevamente")
         throw err
     })
 }
 export const traerPlatos= async (query) =>{
-    return axiosClient.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=635b27286e98400ea84029d977de6fbc&query=${query}`,{})
+    return axiosClient.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&query=${query}`,{})
     .then(function(res){
         console.log(res.data.results)
         return res.data.results
@@ -33,7 +35,7 @@ export const traerPlatos= async (query) =>{
     })
 }
 export const detallePlato= async (id) =>{
-    return axiosClient.get(`https://api.spoonacular.com/recipes/${id}/information?apiKey=635b27286e98400ea84029d977de6fbc`,{})
+    return axiosClient.get(`https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY}`,{})
     .then(function(res){
         console.log(res.data.results)
         return res.data.results

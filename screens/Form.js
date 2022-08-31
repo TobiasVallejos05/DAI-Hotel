@@ -1,19 +1,21 @@
 import React, {  useState } from 'react';
 import { TextInput,Button,StyleSheet,Text,View,Alert } from 'react-native';
-import { enviarEmailPsw } from '../axios/axiosClient';
+import { enviarUsuario } from '../axios/axiosClient';
 import {useContextState, ActionTypes} from '../contextState'
 import { CurrentRenderContext, useNavigation } from '@react-navigation/native';
 
 const Form = ({navigation}) => {
+    
     const {contextState, setContextState} = useContextState();
     const [aux, setAux] = useState(true);
-    const [cargar, setCargar] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [obj, setObj] = useState({
             email: "challenge@alkemy.org",
             password: "react",
     });
+
     const validar = async() => {
-    setCargar(true);
+    setLoading(true);
     if( 
     obj.email == "" || 
     obj.password == ""
@@ -23,7 +25,7 @@ const Form = ({navigation}) => {
     else{
          setAux(true)
          try {
-            const token = await enviarEmailPsw(obj)
+            const token = await enviarUsuario(obj)
             console.log(token)
             setContextState({
                type: ActionTypes.SetToken,
@@ -32,34 +34,37 @@ const Form = ({navigation}) => {
             navigation.push('Home')
          } catch (err) {
             console.log("error: ", err)
-            setCargar(false)
+            setLoading(false)
          }
     }
-    setCargar(false);
+    setLoading(false);
 }
 
     return (      
             <View style={styles.container}>
-                
-                <Text style={styles.iniciarSesion}>Log in</Text><br></br>
-                {!aux &&
-                    <Text>No ingreso los valores correspondientes</Text>
-                }
-                 <TextInput style={styles.input}
-                        title="Por favor, ingrese su usuario"
-                        onChangeText={(value)=>{setObj({...obj,email: value})}}
-                        value={obj.email}
+                <Text style={styles.iniciarSesion}>Log in</Text>
+                <TextInput 
+                    style={styles.input} 
+                    placeholder='Email'
+                    onChangeText={(value)=>{setObj({...obj,email: value})}}
+                    value={obj.email}
                     />
-                 <TextInput   style={styles.input}
+                    <TextInput 
+                        style={styles.input} 
+                        placeholder='Password'
                         onChangeText={(value)=>{setObj({...obj,password: value})}}       
                         value={obj.password}
-                />
-                
-                <Button style = {styles.button}
+                    />
+                {!aux &&
+                    <Text>Al menos uno de los campos está vacío. Por favor, completelo</Text>
+                }
+                <br/>
+                <Button style={styles.button}
+                color = "black"
                 onPress = {validar}
                 title = "SEARCH"
 
-                disabled = {cargar}
+                disabled = {loading}
                 />
                 
            </View>            
@@ -74,8 +79,6 @@ const styles = StyleSheet.create({
         },
         container:{
             flex: 1,
-            width: '100vw',
-            height:'100vh',
             alignItems: 'center',
             placeContent: 'center',
             backgroundColor: "lightgray"
@@ -87,12 +90,17 @@ const styles = StyleSheet.create({
             margin: 12,
             padding: 12
           },
-          button: {
+        error: {
+            fontWeight: 500,
+            color: "red"
+        },
+        button: {
+            margin: 12,
             paddingVertical: 12,
             paddingHorizontal: 32,
             borderRadius: 4,
             elevation: 3,
-            backgroundColor: 'black',
+            color: 'black',
           },
   });
   

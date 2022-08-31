@@ -1,14 +1,14 @@
 import React, {  useState, useEffect} from 'react';
-import { TextInput,Button,StyleSheet,Text,View,Alert,Image } from 'react-native';
+import { TextInput, Button, StyleSheet, Text, View,Alert,Image } from 'react-native';
 import {useContextState, ActionTypes} from '../contextState'
 import { useNavigation } from '@react-navigation/native';
 import { detallePlato } from '../axios/axiosClient';
 
 
-const Info = ({navigation,route}) => {
+const Info = ({navigation, route}) => {
     
     const [plato, setPlato] = useState("");
-    const {contextState, setContextState}=useContextState();
+    const {contextState, setContextState} = useContextState();
     const Home = ({plato})=>{
       console.log(plato.title)
           setContextState({
@@ -36,9 +36,9 @@ const Info = ({navigation,route}) => {
             value:plato.vegetarian,
       });
 
-
 navigation.push('Home')
-    }
+    
+}
 
     useEffect (async() => {
         console.log(route.params.id)
@@ -51,14 +51,13 @@ navigation.push('Home')
     },[]);
 
 return (      
+    
     <View>
     <Image 
     
     style={styles.tinyLogo}
-    source={{
-        uri: plato.image
-      }} >
-    </Image>
+    >
+    </Image> 
     <Text>Plato: {plato.title}</Text>
     <Text>Que tan sano es: {plato.healthScore}</Text>
     <Text>Precio por unidad: {plato.pricePerServing}</Text>
@@ -66,9 +65,9 @@ return (
     {plato.vegetarian ? <Text>El plato es vegetariano</Text>:<Text>El plato no es vegetariano</Text>}
 
     <Button style={styles.button}
-                
+                color = "black"
                 title="ADD"
-                onPress={Home}
+                onClick={Home}
                
                 />
     </View> 
@@ -80,7 +79,6 @@ const styles = StyleSheet.create({
       width: 100,
       height: 100,
     },
-
     button: {
         alignItems: 'center',
         justifyContent: 'center',
@@ -91,7 +89,5 @@ const styles = StyleSheet.create({
         backgroundColor: 'black',
       },
   });
-
-
 
 export default Info;

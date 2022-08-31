@@ -4,10 +4,10 @@ import { StyleSheet, Text, Image , View, TextInput, FlatList, StatusBar, SafeAre
 import { useNavigation } from '@react-navigation/native';
 import {useContextState, ActionTypes, contextState} from '../contextState'
 
-const Home =({navigation})=>{
-  const [buscador,setBuscador]=useState("");
-  const [platos,setPlatos]=useState([]);
-  const {contextState,setContextState}=useContextState();
+const Home = ({navigation}) => {
+  const [buscador, setBuscador] = useState("");
+  const [platos, setPlatos] = useState([]);
+  const {contextState, setContextState} = useContextState();
 
   const renderItem = ({ item }) => {
     return <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Info',{id:item.id})}>
@@ -32,16 +32,13 @@ const Home =({navigation})=>{
 
   return (
     
-    <View style={styles.container} > 
+    <View style={styles.container}> 
       <Text>{contextState.plato.titulo}</Text>
-      <TextInput style={styles.input} 
-      onChangeText={onChange}
-      />
+      <TextInput style={styles.input} placeholder="Search" onChangeText={onChange} />
        <SafeAreaView>
         <FlatList 
          
           data={platos}
-          
           keyExtractor={(data) => data.title}
           renderItem={renderItem}
         />
