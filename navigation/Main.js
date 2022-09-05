@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import Form from '../screens/Form';
+import Login from '../screens/Login';
 import Home from '../screens/Home';
 import Info from '../screens/Info';
 
@@ -15,8 +15,8 @@ const Main = () => {
           {headerShown:false}
            }>
         <Stack.Screen
-          name="Form"
-          component={Form}
+          name="Login"
+          component={Login}
         />
         <Stack.Screen
           name="Home"
@@ -24,8 +24,8 @@ const Main = () => {
         />
         <Stack.Screen
           name="Info"
-        >{(props)=><Info {...props}/>}
-        </Stack.Screen>  
+          component={Info}
+        /> 
       </Stack.Navigator>
     </NavigationContainer>
   );

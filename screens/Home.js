@@ -1,11 +1,10 @@
-import React, { Component, useEffect, useState } from 'react';
-import { traerPlatos } from '../axios/axiosClient';
+import React, { useState } from 'react';
+import { getPlatos } from '../axios/axiosClient';
 import { StyleSheet, Text, Image , View, TextInput, FlatList, StatusBar, SafeAreaView, TouchableOpacity, Button } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import {useContextState, ActionTypes, contextState} from '../contextState'
+import {useContextState } from '../contextState'
 
 const Home = ({navigation}) => {
-  const [buscador, setBuscador] = useState("");
+
   const [platos, setPlatos] = useState([]);
   const {contextState, setContextState} = useContextState();
 
@@ -21,14 +20,15 @@ const Home = ({navigation}) => {
    
   };
 
-  const onChange = async (letras) => {
-    if (letras.length > 2) {  
-    const data = await traerPlatos(letras); 
+  const onChange = async (characters) => {
+    if (characters.length > 2) {  
+    const data = await getPlatos(characters); 
     setPlatos(data);
     console.log(platos)
   }
     
 }
+
 
   return (
 

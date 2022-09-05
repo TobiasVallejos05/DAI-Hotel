@@ -1,38 +1,41 @@
-import React, {  useState } from 'react';
-import { TextInput,Button,StyleSheet,Text,View,Alert } from 'react-native';
-import { enviarUsuario } from '../axios/axiosClient';
-import {useContextState, ActionTypes} from '../contextState'
+import React, { useState } from 'react';
+import { TextInput, Button, StyleSheet, Text, View } from 'react-native';
+import { postLogIn } from '../axios/axiosClient';
+import { useContextState, ActionTypes} from '../contextState'
 
-const Form = ({navigation}) => {
+const Login = ({navigation}) => {
+    
+    const [user, setUser] = useState({
+        email: "challenge@alkemy.org",
+        password: "react",
+    });
     
     const {contextState, setContextState} = useContextState();
-    const [aux, setAux] = useState(true);
     const [loading, setLoading] = useState(false);
-    const [obj, setObj] = useState({
-            email: "challenge@alkemy.org",
-            password: "react",
-    });
-
+    const [error, setError] = useState(true);
+    
     const validar = async() => {
     setLoading(true);
     if( 
-    obj.email == "" || 
-    obj.password == ""
+    user.email == "" || 
+    user.password == ""
     ){
-    setAux(false)
+    setError(false)
     }
     else{
-         setAux(true)
+         setError(true)
          try {
-            const token = await enviarUsuario(obj)
+            const token = await postLogIn(user)
             console.log(token)
             setContextState({
                type: ActionTypes.SetToken,
                value: token,
             });
             navigation.push('Home')
-         } catch (err) {
-            console.log("error: ", err)
+         } catch {
+            alert("Por favor, vuelva a ingresar los datos")
+            console.log("error")
+            setError(true)
             setLoading(false)
          }
     }
@@ -45,16 +48,16 @@ const Form = ({navigation}) => {
                 <TextInput 
                     style={styles.input} 
                     placeholder='Email'
-                    onChangeText={(value)=>{setObj({...obj,email: value})}}
-                    value={obj.email}
+                    onChangeText={(value)=>{setUser({...user,email: value})}}
+                    value={user.email}
                     />
                     <TextInput 
                         style={styles.input} 
                         placeholder='Password'
-                        onChangeText={(value)=>{setObj({...obj,password: value})}}       
-                        value={obj.password}
+                        onChangeText={(value)=>{setUser({...user,password: value})}}       
+                        value={user.password}
                     />
-                {!aux &&
+                {!error &&
                     <Text style = {styles.errorMessage} >Al menos uno de los campos está vacío. Por favor, completelo.</Text>
                 }
                 <br/>
@@ -101,4 +104,4 @@ const styles = StyleSheet.create({
           },
   });
   
-  export default Form;
+  export default Login;

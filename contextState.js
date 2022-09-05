@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useContext} from "react";
 
-export const initialState={
+export const initialState = {
     loading:true,
     token:'',
     menu:{
@@ -9,11 +9,11 @@ export const initialState={
       precioPromedio:0,
       healthScore:0,
       platosVeganos:0,
-      platosVegetarianos:0,
+      platosNoVeganos:0,
     },
 };
 
-export const ActionTypes={
+export const ActionTypes = {
 SetLoading:'SET_LOADING',
 SetToken:'SET_TOKEN',
 SetMenu:'SET_MENU',
@@ -21,11 +21,10 @@ SetMenuPlatos:'SET_MENU_PLATOS',
 SetMenuPrecioPromedio:'SET_MENU_PRECIOPROMEDIO',
 SetMenuHealthScore:'SET_MENU_HEALTHSCORE',
 SetMenuPlatosVeganos:'SET_MENU_PLATOSVEGANOS',
-SetMenuPlatosVegetarianos:'SET_MENU_PLATOSVEGETARIANOS',
-
+SetMenuPlatosNoVeganos:'SET_MENU_PLATOSNOVEGANOS',
 }
 
-export const reducer =(state={},action)=>{
+export const reducer =(state={},action) => {
     switch(action.type){
         case ActionTypes.SetLoading:
             return{
@@ -37,49 +36,48 @@ export const reducer =(state={},action)=>{
                 ...state,
                 token: action.value,
             };
-            case ActionTypes.SetMenu:
+        case ActionTypes.SetMenu:
             return{
                 ...state,
                   menu: action.value,
             };
-            case ActionTypes.SetMenuPlatos:
-                return {
-                    ...state,
-                    menu: {
-                        ...state.menu,
-                        platos: [...state.menu.platos, action.value],
+        case ActionTypes.SetMenuPlatos:
+            return {
+                ...state,
+                menu: {
+                    ...state.menu,
+                    platos: [...state.menu.platos, action.value],
                     }
                 };
-            case ActionTypes.SetMenuPrecioPromedio:
-            return{
-            ...state,
-            precioPromedio: action.value,
-            };
-            case ActionTypes.SetMenuHealthScore:
-            return{
-            ...state,
-            menu:{
-            ...menu,
-            healthScore: action.value,
-            },
-            };
-            case ActionTypes.SetMenuPlatosVeganos:
+        case ActionTypes.SetMenuPrecioPromedio:
             return{
                 ...state,
-            menu:{
-            ...state,
-            platosVeganos: action.value,
-            },
-            };
-            case ActionTypes.SetMenuPlatosVegetarianos:
+                precioPromedio: action.value,
+                };
+        case ActionTypes.SetMenuHealthScore:
             return{
-            ...state,
-            menu:{
-            ...state,
-            platosVegetarianos: action.value,
-            },
-        };
-         
+                ...state,
+                menu:{
+                    ...menu,
+                    healthScore: action.value,
+                },
+            };
+        case ActionTypes.SetMenuPlatosVeganos:
+            return{
+                ...state,
+                menu:{
+                ...state,
+                platosVeganos: action.value,
+                },
+            };
+        case ActionTypes.SetMenuPlatosNoVeganos:
+            return{
+                ...state,
+                menu:{
+                    ...state,
+                    platosNoVeganos: action.value,
+                },
+            };
     }
 }
 

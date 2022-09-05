@@ -6,9 +6,9 @@ const axiosClient = axios.create({
 
 const API_KEY = "2f34f3b6abb54bc48a7dacd61c0353e9"
 
-export const enviarUsuario= async (obj) =>{
+export const postLogIn = async (user) =>{
     return axiosClient.post('', {
-        ...obj
+        ...user
     }).then(response =>{
         if(response.status < 300){
             console.log(response.data)
@@ -18,13 +18,13 @@ export const enviarUsuario= async (obj) =>{
             console.log("Algo no funciona")
         }
     })
-    .catch(function(err) {
-        console.log("No funciona", err)
-        alert("Por favor, ingrese los datos nuevamente")
-        throw err
+    .catch(function() {
+        console.log("No funciona")
+        throw "Error"
     })
 }
-export const traerPlatos= async (query) =>{
+
+export const getPlatos = async (query) =>{
     return axiosClient.get(`https://api.spoonacular.com/recipes/complexSearch?apiKey=${API_KEY}&query=${query}`,{})
     .then(function(res){
         console.log(res.data.results)
@@ -34,7 +34,7 @@ export const traerPlatos= async (query) =>{
         throw "Error"
     })
 }
-export const detallePlato= async (id) =>{
+export const getPlatoCompleto = async (id) =>{
     return axiosClient.get(`https://api.spoonacular.com/recipes/${id}/information?apiKey=${API_KEY}`,{})
     .then(function(res){
         console.log(res.data.results)
