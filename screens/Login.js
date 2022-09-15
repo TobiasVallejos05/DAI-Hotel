@@ -58,7 +58,7 @@ const Login = ({navigation}) => {
                         value={user.password}
                     />
                 {!error &&
-                    <Text style = {styles.errorMessage} >Al menos uno de los campos está vacío. Por favor, completelo.</Text>
+                    <Text style = {styles.errorMessage}> Al menos uno de los campos está vacío. Por favor, completelo.</Text>
                 }
                 <br/>
                 <Button style = {styles.button}

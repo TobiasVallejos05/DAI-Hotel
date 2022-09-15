@@ -24,8 +24,8 @@ const Main = () => {
         />
         <Stack.Screen
           name="Info"
-          component={Info}
-        /> 
+        >{(props)=><Info {...props}/>}
+        </Stack.Screen>   
       </Stack.Navigator>
     </NavigationContainer>
   );

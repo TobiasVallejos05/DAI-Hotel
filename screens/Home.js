@@ -9,13 +9,38 @@ const Home = ({navigation}) => {
   const {contextState, setContextState} = useContextState();
 
   const renderItem = ({ item }) => {
-    return <TouchableOpacity style={styles.item} onPress={() => navigation.navigate('Info',{id:item.id})}>
-      <Image style={styles.tinyLogo}
+    return <TouchableOpacity style={styles.item} onPress={() => {
+      console.log(item.id)
+      navigation.navigate('Info',{id:item.id})}
+      }>
+      <Text style={styles.title}>{item.title}</Text>
+      <Image 
+    
+      style={styles.tinyLogo}
       source={{
           uri: item.image.toString(),
         }} >
-      </Image>
+        </Image>
+ 
+    </TouchableOpacity>
+   
+  };
+
+  const renderItem2 = ({ item }) => {
+    return <TouchableOpacity style={styles.item} onPress={() => {
+      console.log(item.title)
+      navigation.navigate('Info',{id:item.id})}
+      }>
       <Text style={styles.title}>{item.title}</Text>
+      <Image 
+    
+      style={styles.tinyLogo}
+      source={{
+          uri: item?.image?.toString(),
+        }} >
+        </Image>
+        <Button onPress={() => navigation.navigate('Info',{id:item?.id})}></Button>
+        
     </TouchableOpacity>
    
   };
@@ -25,34 +50,34 @@ const Home = ({navigation}) => {
     const data = await getPlatos(characters); 
     setPlatos(data);
     console.log(platos)
-  }
-    
+  }    
 }
-
 
   return (
 
-    <View style={styles.container} > 
-    <Image 
-    style={styles.tinyLogo}
-    source={{
-        uri: contextState.menu?.platos[0]?.image.toString(),
-      }}></Image>
-    <Text>{contextState.menu?.platos[0]?.title}</Text>
-    <Button onPress={() => navigation.navigate('Info',{id:contextState.menu?.platos[0]?.id})}></Button>
-    <Text>Datos ingresados</Text>
-    <TextInput onChangeText = {onChange} style = {styles.input}
-    />
-
-    
-     <SafeAreaView style={styles.container}>
-      <FlatList 
-        data={platos}
+    <View style={styles.container}> 
+      
+      <SafeAreaView>
+      <FlatList
+        data={contextState.menu.platos}
+        renderItem={renderItem2}
         keyExtractor={(data) => data.title}
-        renderItem={renderItem}
+      />
+ 
+    </SafeAreaView>
+      <Text style={styles.successfulMessage}>Ha ingresado exitosamente</Text>
+      <TextInput 
+      onChangeText={onChange}
+      style={styles.input}
       />
       
-      </SafeAreaView>
+       <SafeAreaView style={styles.container}>
+        <FlatList 
+          data={platos}
+          keyExtractor={(data) => data.title}
+          renderItem={renderItem}
+        />
+        </SafeAreaView>
 
          
   </View> 
@@ -71,6 +96,11 @@ const styles = StyleSheet.create({
     marginTop: StatusBar.currentHeight || 0,
     backgroundColor: "lightgray",
     alignItems: "center",
+  },
+  successfulMessage: {
+    fontSize: 20,
+    fontweight: 500,
+    margin: 10
   },
   input: {
     height: 40,

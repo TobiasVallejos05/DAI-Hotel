@@ -24,7 +24,7 @@ SetMenuPlatosVeganos:'SET_MENU_PLATOSVEGANOS',
 SetMenuPlatosNoVeganos:'SET_MENU_PLATOSNOVEGANOS',
 }
 
-export const reducer =(state={},action) => {
+export const reducer = (state = {}, action) => {
     switch(action.type){
         case ActionTypes.SetLoading:
             return{
@@ -66,8 +66,8 @@ export const reducer =(state={},action) => {
             return{
                 ...state,
                 menu:{
-                ...state,
-                platosVeganos: action.value,
+                    ...state,
+                    platosVeganos: action.value,
                 },
             };
         case ActionTypes.SetMenuPlatosNoVeganos:
