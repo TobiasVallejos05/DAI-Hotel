@@ -6,15 +6,15 @@ import { useContextState, ActionTypes} from '../contextState'
 const Login = ({navigation}) => {
     
     const [user, setUser] = useState({
-        email: "challenge@alkemy.org",
-        password: "react",
+        email: "",
+        password: ""
     });
     
     const {contextState, setContextState} = useContextState();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(true);
     
-    const validacion = async() => {
+    const validar = async() => {
     setLoading(true);
     if( 
     user.email == "" || 
@@ -63,7 +63,7 @@ return (
                 <br/>
                 <Button style = {styles.button}
                 color = "black"
-                onPress = {validacion}
+                onPress = {validar}
                 title = "SEARCH"
                 disabled = {loading}
                 />       
