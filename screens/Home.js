@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getPlatos } from '../axios/axiosClient';
-import { StyleSheet, Text, Image , View, TextInput, FlatList, StatusBar, SafeAreaView, TouchableOpacity, Button } from 'react-native';
-import {useContextState } from '../contextState'
+import { View, Text, TextInput, Image, FlatList, SafeAreaView, TouchableOpacity, StyleSheet, StatusBar } from 'react-native';
+import { useContextState } from '../contextState'
 
 const Home = ({navigation}) => {
 
@@ -15,75 +15,71 @@ const Home = ({navigation}) => {
       }>
       <Text style={styles.title}>{item.title}</Text>
       <Image 
-    
-      style={styles.tinyLogo}
-      source={{
+      style = {styles.tinyLogo}
+      source = {{
           uri: item.image.toString(),
         }} >
         </Image>
- 
     </TouchableOpacity>
    
   };
 
-  const renderItem2 = ({ item }) => {
-    return <TouchableOpacity style={styles.item} onPress={() => {
-      console.log(item.title)
-      navigation.navigate('Info',{id:item.id})}
-      }>
-      <Text style={styles.title}>{item.title}</Text>
-      <Image 
-    
-      style={styles.tinyLogo}
-      source={{
-          uri: item?.image?.toString(),
-        }} >
-        </Image>
-        <Button onPress={() => navigation.navigate('Info',{id:item?.id})}></Button>
-        
-    </TouchableOpacity>
-   
-  };
+  useEffect (async () => {
+    if(contextState.token!=''){
+    console.log("Ha ingresado correctamente")
+    }
+    else{
+    navigation.navigate('Form')
+    }
+  },[]);
 
   const onChange = async (characters) => {
     if (characters.length > 2) {  
     const data = await getPlatos(characters); 
     setPlatos(data);
     console.log(platos)
-  }    
-}
+    }    
+  }
+
+  useEffect (async () => {
+    if(contextState.menu.platos < 4){
+    <Text>Recuerde que puede seguir agregando platos al menú</Text>
+    }
+    else{
+    <Text>Ha alcanzado el máximo de platos por menú</Text>
+    }
+    });
+    
+  useEffect (async () => {
+    if(contextState.menu.platosVeganos <= 2){
+    <Text>Recuerde que puede seguir agregando platos veganos al menú</Text>
+    }
+    else{
+    <Text>Ha alcanzado el máximo de platos veganos por menú</Text>
+    }
+    });
 
   return (
 
-    <View style={styles.container}> 
-      
-      <SafeAreaView>
-      <FlatList
-        data={contextState.menu.platos}
-        renderItem={renderItem2}
-        keyExtractor={(data) => data.title}
-      />
- 
-    </SafeAreaView>
+    <View style={styles.container}>       
+
       <Text style={styles.successfulMessage}>Ha ingresado exitosamente</Text>
       <TextInput 
       onChangeText={onChange}
       style={styles.input}
       />
       
-       <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.container}>
         <FlatList 
           data={platos}
-          keyExtractor={(data) => data.title}
           renderItem={renderItem}
+          keyExtractor={(data) => data.title}
         />
-        </SafeAreaView>
-
-         
-  </View> 
-
+      </SafeAreaView>         
+    </View> 
   ); 
 }
+
 const styles = StyleSheet.create({
 
   tinyLogo: {

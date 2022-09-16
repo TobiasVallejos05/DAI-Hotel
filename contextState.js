@@ -21,7 +21,6 @@ SetMenuPlatos:'SET_MENU_PLATOS',
 SetMenuPrecioPromedio:'SET_MENU_PRECIOPROMEDIO',
 SetMenuHealthScore:'SET_MENU_HEALTHSCORE',
 SetMenuPlatosVeganos:'SET_MENU_PLATOSVEGANOS',
-SetMenuPlatosNoVeganos:'SET_MENU_PLATOSNOVEGANOS',
 }
 
 export const reducer = (state = {}, action) => {
@@ -68,14 +67,6 @@ export const reducer = (state = {}, action) => {
                 menu:{
                     ...state,
                     platosVeganos: action.value,
-                },
-            };
-        case ActionTypes.SetMenuPlatosNoVeganos:
-            return{
-                ...state,
-                menu:{
-                    ...state,
-                    platosNoVeganos: action.value,
                 },
             };
     }

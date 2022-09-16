@@ -35,14 +35,13 @@ const Login = ({navigation}) => {
          } catch {
             alert("Por favor, vuelva a ingresar los datos")
             console.log("error")
-            setError(true)
             setLoading(false)
          }
     }
     setLoading(false);
 }
 
-    return (      
+return (      
             <View style={styles.container}>
                 <Text style={styles.login}>Iniciar Sesión</Text>
                 <TextInput 
@@ -50,13 +49,14 @@ const Login = ({navigation}) => {
                     placeholder='Email'
                     onChangeText={(value)=>{setUser({...user,email: value})}}
                     value={user.email}
-                    />
-                    <TextInput 
-                        style={styles.input} 
-                        placeholder='Password'
-                        onChangeText={(value)=>{setUser({...user,password: value})}}       
-                        value={user.password}
-                    />
+                />
+                <TextInput 
+                    style={styles.input} 
+                    placeholder='Password'
+                    onChangeText={(value)=>{setUser({...user,password: value})}}       
+                    value={user.password}
+                />
+                
                 {!error &&
                     <Text style = {styles.errorMessage}> Al menos uno de los campos está vacío. Por favor, completelo.</Text>
                 }
@@ -66,8 +66,7 @@ const Login = ({navigation}) => {
                 onPress = {validar}
                 title = "SEARCH"
                 disabled = {loading}
-                />
-                
+                />       
            </View>            
         )        
 }

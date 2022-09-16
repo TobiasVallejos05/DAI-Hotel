@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Image, Text, Button, StyleSheet } from 'react-native';
 import { useContextState, ActionTypes } from '../contextState';
 import { getPlatoCompleto } from '../axios/axiosClient';
@@ -21,16 +21,15 @@ const Info = ({navigation, route}) => {
     const eliminarPlato = () => {
       const indexPlato = contextState.menu.platos.findIndex( (platos) => platos.id === route.params.id );
       console.log(indexPlato)
-        contextState.menu.platos.splice(indexPlato , 1),
+      contextState.menu.platos.splice(indexPlato , 1),
       console.log(contextState.menu.platos)
       navigation.push('Home')
     }
 
     useEffect (async () => {
       if(contextState.token!=''){
-        console.log("Ingreso correctamente")
-      }
-      else{
+        console.log("Ha ingresado correctamente")
+      }else{
         navigation.navigate('Login')
       }
         console.log(route.params.id)
@@ -40,10 +39,12 @@ const Info = ({navigation, route}) => {
         setPlato(data);
     },[route.params.id]);
 
+    console.log(plato.title, plato.image);
+
 return (      
+    
     <View>
     <Image 
-    
     style = {styles.tinyLogo}
     source = {{
         uri: plato.image
