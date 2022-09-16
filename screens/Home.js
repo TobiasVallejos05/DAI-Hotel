@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getPlatos } from '../axios/axiosClient';
-import { View, Text, TextInput, Image, FlatList, SafeAreaView, TouchableOpacity, StyleSheet, StatusBar } from 'react-native';
+import { View, Text, TextInput, Image, FlatList, SafeAreaView, TouchableOpacity, StyleSheet, StatusBar, Button } from 'react-native';
 import { useContextState } from '../contextState'
 
 const Home = ({navigation}) => {
@@ -59,10 +59,34 @@ const Home = ({navigation}) => {
     }
     });
 
+  const renderItem2 = ({ item }) => {
+    return <TouchableOpacity style = {styles.item} onPress = {() => {
+      console.log(item.title)
+      navigation.navigate('Info',{id:item.id})}
+      }>
+      <Text style={styles.title}>{item.title}</Text>
+      <Image 
+      style={styles.tinyLogo}
+      source={{
+        uri: item?.image?.toString(),
+      }}>
+      </Image>
+      <Button onPress = {() => navigation.navigate('Info',{id:item?.id})}></Button>
+      </TouchableOpacity>
+  };
+
   return (
 
     <View style={styles.container}>       
 
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={contextState.menu.platos}
+        renderItem={renderItem2}
+        keyExtractor={(data) => data.title}
+      />
+    </SafeAreaView>
+      
       <Text style={styles.successfulMessage}>Ha ingresado exitosamente</Text>
       <TextInput 
       onChangeText={onChange}
@@ -91,7 +115,7 @@ const styles = StyleSheet.create({
     display: "flex",
     marginTop: StatusBar.currentHeight || 0,
     backgroundColor: "lightgray",
-    alignItems: "center",
+    alignItems: "center"
   },
   successfulMessage: {
     fontSize: 20,
@@ -112,7 +136,9 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: 400
+    fontWeight: 400,
+    alignItems: 'center',
+    placeContent: 'center'
   },
   image: {
     width: 100,

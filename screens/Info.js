@@ -26,6 +26,10 @@ const Info = ({navigation, route}) => {
       navigation.push('Home')
     }
 
+    const volverAtras = () => {
+      navigation.push('Home')
+    }
+
     useEffect (async () => {
       if(contextState.token!=''){
         console.log("Ha ingresado correctamente")
@@ -43,39 +47,44 @@ const Info = ({navigation, route}) => {
 
 return (      
     
-    <View>
-    <Image 
-    style = {styles.tinyLogo}
-    source = {{
+    <View style = {styles.container}>
+      <Image 
+      style = {styles.tinyLogo}
+      source = {{
         uri: plato.image
       }}>
-    </Image>
-    <Text>Plato: {plato.title}</Text>
-    <Text>Que tan sano es: {plato.healthScore}</Text>
-    <Text>Precio por unidad: {plato.pricePerServing}</Text>
-    {plato.vegan ? <Text>El plato es vegano</Text>:<Text>El plato no es vegano</Text>}
-    {contextState.menu.platos.find(p => p.id === route.params.id) ? <Button style = {styles.button} title = "Eliminar" onPress = {eliminarPlato}/> : <Button style = {styles.button} title = "Agregar" onPress = {agregarPlato}/>}
-
-    </View> 
+      </Image>
+      <Text>Nombre del Plato: {plato.title}</Text>
+      <Text>Health Score: {plato.healthScore}</Text>
+      <Text>Precio por Unidad: {plato.pricePerServing}</Text>
+      {plato.vegan ? <Text>El plato es vegano</Text>:<Text>El plato no es vegano</Text>}<br/>
+      {contextState.menu.platos.find(p => p.id === route.params.id) ? 
+      <Button style = {styles.button} color = "black" title = "DELETE" onPress = {eliminarPlato} /> : 
+      <Button style = {styles.button} color = "black" title = "ADD" onPress = {agregarPlato} />}
+      <br/><Button color = "black" title = "GO BACK" onPress = {volverAtras} />
+      </View> 
 )
 }
 
 const styles = StyleSheet.create({
 
-    tinyLogo: {
-      width: 100,
-      height: 100,
-    },
-
-    button: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingVertical: 12,
-        paddingHorizontal: 32,
-        borderRadius: 4,
-        elevation: 3,
-        backgroundColor: 'black',
-      },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    placeContent: 'center',
+    backgroundColor: "lightgray"
+  },
+  tinyLogo: {
+    width: 200,
+    height: 200
+  },
+  button: {
+    margin: 12,
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 4,
+    elevation: 3
+  }
   });
 
 export default Info;

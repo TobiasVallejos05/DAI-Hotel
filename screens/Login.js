@@ -14,7 +14,7 @@ const Login = ({navigation}) => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(true);
     
-    const validar = async() => {
+    const validacion = async() => {
     setLoading(true);
     if( 
     user.email == "" || 
@@ -45,16 +45,16 @@ return (
             <View style={styles.container}>
                 <Text style={styles.login}>Iniciar Sesión</Text>
                 <TextInput 
-                    style={styles.input} 
-                    placeholder='Email'
-                    onChangeText={(value)=>{setUser({...user,email: value})}}
-                    value={user.email}
+                    style = {styles.input} 
+                    placeholder = 'Email'
+                    onChangeText = {(value) => {setUser({...user,email: value})}}
+                    value = {user.email}
                 />
                 <TextInput 
-                    style={styles.input} 
-                    placeholder='Password'
-                    onChangeText={(value)=>{setUser({...user,password: value})}}       
-                    value={user.password}
+                    style = {styles.input} 
+                    placeholder = 'Password'
+                    onChangeText = {(value) => {setUser({...user,password: value})}}       
+                    value = {user.password}
                 />
                 
                 {!error &&
@@ -63,7 +63,7 @@ return (
                 <br/>
                 <Button style = {styles.button}
                 color = "black"
-                onPress = {validar}
+                onPress = {validacion}
                 title = "SEARCH"
                 disabled = {loading}
                 />       
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
             color: "red"
         },
         button: {
-            margin: 12,
+            marginTop: 12,
             paddingVertical: 12,
             paddingHorizontal: 32,
             borderRadius: 4,

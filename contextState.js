@@ -21,6 +21,7 @@ SetMenuPlatos:'SET_MENU_PLATOS',
 SetMenuPrecioPromedio:'SET_MENU_PRECIOPROMEDIO',
 SetMenuHealthScore:'SET_MENU_HEALTHSCORE',
 SetMenuPlatosVeganos:'SET_MENU_PLATOSVEGANOS',
+SetMenuPlatosNoVeganos:'SET_MENU_PLATOSNOVEGANOS',
 }
 
 export const reducer = (state = {}, action) => {
@@ -51,15 +52,18 @@ export const reducer = (state = {}, action) => {
         case ActionTypes.SetMenuPrecioPromedio:
             return{
                 ...state,
-                precioPromedio: action.value,
-                };
+                menu: {
+                    ...menu,
+                    precioPromedio: action.value,
+                }
+            };
         case ActionTypes.SetMenuHealthScore:
             return{
                 ...state,
                 menu:{
                     ...menu,
                     healthScore: action.value,
-                },
+                }
             };
         case ActionTypes.SetMenuPlatosVeganos:
             return{
@@ -67,7 +71,15 @@ export const reducer = (state = {}, action) => {
                 menu:{
                     ...state,
                     platosVeganos: action.value,
-                },
+                }
+            };
+        case ActionTypes.SetMenuPlatosNoVeganos:
+            return{
+                ...state,
+                menu:{
+                    ...state,
+                    platosNoVeganos: action.value,
+                }
             };
     }
 }
@@ -86,4 +98,5 @@ const setContextState=dispatch;
 
 return <Cont.Provider value ={{contextState, setContextState}}>{children}</Cont.Provider>
 }
+
 export const useContextState = () => useContext(Cont);
