@@ -9,13 +9,35 @@ const Info = ({navigation, route}) => {
     const {contextState, setContextState} = useContextState();
     
     const agregarPlato = () => {
-      console.log(plato.title)
-      setContextState({
-        type:ActionTypes.SetMenuPlatos,
-        value:plato,
-        });
-      console.log(contextState.menu.platos[1])
+      
+      let platosVeganos = 0;
+      let platosNoVeganos = 0;
+
+      for(let i = 0; i < contextState.menu.platos.length; i++){
+        if(contextState.menu.platos[i].vegan == true){
+          platosVeganos++;
+          console.log(platosVeganos)
+        }else{
+          platosNoVeganos++;
+          console.log(platosNoVeganos)
+        }
+      }
+      if(plato.vegan == true){
+        platosVeganos++;
+      }else{
+        platosNoVeganos++;
+      }
+      if(platosVeganos <=2 && platosNoVeganos <= 2){
+        console.log(plato.title)
+        setContextState({
+          type: ActionTypes.SetMenuPlatos,
+          value: plato,
+          });
+        console.log(contextState.menu.platos[1])
       navigation.push('Home')
+    }else{  
+      alert("El máximo de platos veganos tanto como no veganos es 2")
+      }
     }
     
     const eliminarPlato = () => {

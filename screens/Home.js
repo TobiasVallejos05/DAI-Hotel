@@ -7,6 +7,8 @@ const Home = ({navigation}) => {
 
   const [platos, setPlatos] = useState([]);
   const {contextState, setContextState} = useContextState();
+  const [precioPromedio, setPrecioPromedio]=useState("");
+  const [healthScore, setHealthScore]=useState("");
 
   const renderItem = ({ item }) => {
     return <TouchableOpacity style={styles.item} onPress={() => {
@@ -25,13 +27,26 @@ const Home = ({navigation}) => {
   };
 
   useEffect (async () => {
-    if(contextState.token!=''){
-    console.log("Ha ingresado correctamente")
+
+    console.log(contextState.token)
+    if(contextState.token != ''){
+      console.log("Ha ingresado correctamente")
     }
     else{
-    navigation.navigate('Form')
+      console.log("No ha ingresado los datos correctamente. Por favor, vuelva a intentarlo")
+      navigation.navigate('Login')
     }
-  },[]);
+    let precioAcumulativo = 0;
+    let totalHealthScore = 0;
+    for(let i = 0; i < contextState.menu.platos.length; i++){
+      precioAcumulativo = precioAcumulativo + contextState.menu.platos[i].pricePerServing;
+      totalHealthScore = totalHealthScore + contextState.menu.platos[i].healthScore;
+    
+    }
+    setHealthScore(totalHealthScore/contextState.menu.platos.length);
+    setPrecioPromedio(precioAcumulativo);
+    
+},[]);
 
   const onChange = async (characters) => {
     if (characters.length > 2) {  
@@ -40,24 +55,6 @@ const Home = ({navigation}) => {
     console.log(platos)
     }    
   }
-
-  useEffect (async () => {
-    if(contextState.menu.platos < 4){
-    <Text>Recuerde que puede seguir agregando platos al menú</Text>
-    }
-    else{
-    <Text>Ha alcanzado el máximo de platos por menú</Text>
-    }
-    });
-    
-  useEffect (async () => {
-    if(contextState.menu.platosVeganos <= 2){
-    <Text>Recuerde que puede seguir agregando platos veganos al menú</Text>
-    }
-    else{
-    <Text>Ha alcanzado el máximo de platos veganos por menú</Text>
-    }
-    });
 
   const renderItem2 = ({ item }) => {
     return <TouchableOpacity style = {styles.item} onPress = {() => {
@@ -92,6 +89,8 @@ const Home = ({navigation}) => {
       onChangeText={onChange}
       style={styles.input}
       />
+      <Text style={styles.priceAndHealthScore}>El precio acumulativo de todos los platos es {isNaN(precioPromedio)?0:precioPromedio}</Text>
+      <Text style={styles.priceAndHealthScore}>El promedio de Health Score es {isNaN(healthScore)?0:healthScore}</Text>
       
       <SafeAreaView style={styles.container}>
         <FlatList 
@@ -144,6 +143,9 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100
   },
+  priceAndHealthScore: {
+    marginBottom: 8
+  }
 });
 
 export default Home

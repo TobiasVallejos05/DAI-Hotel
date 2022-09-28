@@ -3,7 +3,7 @@ import axios from "axios";
 const axiosClient = axios.create({
     baseURL: "http://challenge-react.alkemy.org/"
 })
-const API_KEY = "c547c1611bdc46a68cbae5194ec3ff74"
+const API_KEY = "0da6e9f7d20f41d3932a24fe3845e908"
 
 export const postLogIn = async (user) =>{
     return axiosClient.post('', {
